@@ -15,6 +15,7 @@
  * - @<n> : デューティ/波形設定
  * - & : タイ
  * - . : 付点
+ * - $ : ループポイント（ループ再生時にここに戻る）
  */
 
 export interface NoteEvent {
@@ -51,7 +52,11 @@ export interface WaveEvent {
   preset: string;
 }
 
-export type MMLEvent = NoteEvent | RestEvent | TempoEvent | VolumeEvent | DutyEvent | WaveEvent;
+export interface LoopPointEvent {
+  type: 'looppoint';
+}
+
+export type MMLEvent = NoteEvent | RestEvent | TempoEvent | VolumeEvent | DutyEvent | WaveEvent | LoopPointEvent;
 
 export interface ParsedTrack {
   channel: number;
@@ -213,6 +218,12 @@ export class MMLParser {
         case '&':
           // タイ（次の音符と結合）- 現在は無視
           this.pos++;
+          break;
+
+        case '$':
+          // ループポイント（ループ再生時にここに戻る）
+          this.pos++;
+          events.push({ type: 'looppoint' });
           break;
 
         default:

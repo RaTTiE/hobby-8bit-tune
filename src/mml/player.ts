@@ -15,6 +15,7 @@ interface TrackState {
   ticksUntilNext: number;
   currentDuty: number;
   currentVolume: number;
+  loopPointIndex: number;  // ループポイントのイベントインデックス（0=最初から）
 }
 
 export type PlayerState = 'stopped' | 'playing' | 'paused';
@@ -89,6 +90,7 @@ export class MMLPlayer {
       ticksUntilNext: 0,
       currentDuty: 2,
       currentVolume: 15,
+      loopPointIndex: 0,
     }));
 
     // 総再生時間を計算
@@ -103,6 +105,24 @@ export class MMLPlayer {
     for (const track of parsed.tracks) {
       let ticks = 0;
       for (const event of track.events) {
+        if (event.type === 'note' || event.type === 'rest') {
+          ticks += event.duration;
+        }
+      }
+      maxTicks = Math.max(maxTicks, ticks);
+    }
+
+    return maxTicks;
+  }
+
+  private calculateLoopPointTick(): number {
+    // 全トラックのループポイントまでのtickを計算し、最大値を返す
+    let maxTicks = 0;
+
+    for (const track of this.tracks) {
+      let ticks = 0;
+      for (let i = 0; i < track.loopPointIndex && i < track.events.length; i++) {
+        const event = track.events[i];
         if (event.type === 'note' || event.type === 'rest') {
           ticks += event.duration;
         }
@@ -199,10 +219,10 @@ export class MMLPlayer {
   private processTick(): void {
     if (!this.hasMoreEvents()) {
       if (this.looping) {
-        // ループ再生
-        this.currentTick = 0;
+        // ループ再生：ループポイントに戻る
+        this.currentTick = this.calculateLoopPointTick();
         this.tracks.forEach(track => {
-          track.eventIndex = 0;
+          track.eventIndex = track.loopPointIndex;
           track.ticksUntilNext = 0;
         });
       } else {
@@ -233,6 +253,10 @@ export class MMLPlayer {
         if (event.type === 'tempo') {
           this.tempo = event.bpm;
           this.updateTicksPerSecond();
+        }
+
+        if (event.type === 'looppoint') {
+          track.loopPointIndex = track.eventIndex + 1;
         }
 
         track.eventIndex++;
@@ -301,6 +325,11 @@ export class MMLPlayer {
           if (channel instanceof WaveChannel) {
             channel.setWavePreset(event.preset);
           }
+          break;
+
+        case 'looppoint':
+          // ループポイントを記録（現在のインデックスの次の位置）
+          track.loopPointIndex = track.eventIndex + 1;
           break;
       }
 
