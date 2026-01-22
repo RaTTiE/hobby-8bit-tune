@@ -139,7 +139,7 @@ body {
   font-size: 13px;
 }
 
-/* Sample Selector */
+/* Sample Selector (legacy) */
 .sample-selector-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -149,6 +149,22 @@ body {
 .sample-selector-button {
   padding: 8px 10px;
   font-size: 12px;
+}
+
+/* MML Library */
+.mml-library-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.mml-library-button {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.mml-library-button:hover {
+  background-color: #3d4a5f !important;
 }
 
 /* Help section */
@@ -208,6 +224,11 @@ body {
   }
 
   .sample-selector-button {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .mml-library-button {
     padding: 10px 16px;
     font-size: 13px;
   }
@@ -285,6 +306,10 @@ body {
   }
 
   .sample-selector-list {
+    grid-template-columns: 1fr;
+  }
+
+  .mml-library-list {
     grid-template-columns: 1fr;
   }
 
