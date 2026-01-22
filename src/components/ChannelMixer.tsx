@@ -19,23 +19,26 @@ export function ChannelMixer({
     <div style={styles.container}>
       <div style={styles.header}>Channel Mixer</div>
 
-      <div style={styles.masterVolume}>
+      <div className="channel-mixer-volume" style={styles.masterVolume}>
         <label style={styles.label}>Master Volume</label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={masterVolume * 100}
-          onChange={(e) => onMasterVolumeChange(parseInt(e.target.value) / 100)}
-          style={styles.slider}
-        />
-        <span style={styles.volumeValue}>{Math.round(masterVolume * 100)}%</span>
+        <div className="channel-mixer-volume-row" style={styles.sliderRow}>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={masterVolume * 100}
+            onChange={(e) => onMasterVolumeChange(parseInt(e.target.value) / 100)}
+            style={styles.slider}
+          />
+          <span style={styles.volumeValue}>{Math.round(masterVolume * 100)}%</span>
+        </div>
       </div>
 
-      <div style={styles.channels}>
+      <div className="channel-mixer-channels" style={styles.channels}>
         {channels.map((ch) => (
           <div key={ch.id} style={styles.channel}>
             <button
+              className="channel-mixer-button"
               style={{
                 ...styles.channelButton,
                 backgroundColor: ch.enabled ? '#9be36d' : '#2d3a4f',
@@ -82,13 +85,16 @@ const styles: Record<string, React.CSSProperties> = {
     textTransform: 'uppercase',
   },
   masterVolume: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
     marginBottom: '16px',
     padding: '12px',
     backgroundColor: '#0d1117',
     borderRadius: '4px',
+  },
+  sliderRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    flex: 1,
   },
   label: {
     color: '#9be36d',

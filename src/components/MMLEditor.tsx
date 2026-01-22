@@ -23,6 +23,7 @@ export function MMLEditor({ value, onChange, disabled }: MMLEditorProps) {
       </div>
       <div style={styles.editorWrapper}>
         <textarea
+          className="mml-editor-textarea"
           style={{
             ...styles.editor,
             ...(disabled ? styles.editorDisabled : {}),
@@ -77,14 +78,12 @@ const styles: Record<string, React.CSSProperties> = {
   editor: {
     width: '100%',
     height: '100%',
-    minHeight: '300px',
     padding: '12px',
     backgroundColor: '#0d1117',
     color: '#9be36d',
     border: 'none',
     outline: 'none',
     fontFamily: "'Courier New', monospace",
-    fontSize: '14px',
     lineHeight: '1.5',
     resize: 'none',
   },
