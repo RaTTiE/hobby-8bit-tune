@@ -5,10 +5,8 @@
  */
 
 import { GameBoyAPU } from '../audio/apu';
-import { PulseChannel, WaveChannel, NoiseChannel } from '../audio/channels';
-import { parseMML, MMLEvent, ParsedMML, ParsedTrack } from './parser';
-
-const TICKS_PER_WHOLE_NOTE = 96;
+import { PulseChannel, WaveChannel } from '../audio/channels';
+import { parseMML, MMLEvent, ParsedMML } from './parser';
 
 interface TrackState {
   channel: number;
@@ -34,7 +32,6 @@ export class MMLPlayer {
   private _state: PlayerState = 'stopped';
   private callback: PlayerCallback | null = null;
   private looping: boolean = false;
-  private mmlSource: string = '';
 
   constructor() {
     this.apu = new GameBoyAPU();
@@ -80,7 +77,6 @@ export class MMLPlayer {
 
   load(mml: string): void {
     this.stop();
-    this.mmlSource = mml;
     const parsed = parseMML(mml);
 
     this.tempo = parsed.globalTempo;

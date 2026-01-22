@@ -36,10 +36,10 @@ export class GameBoyAPU {
   private scriptProcessor: ScriptProcessorNode | null = null;
   private gainNode: GainNode | null = null;
 
-  readonly ch1: PulseChannel;
-  readonly ch2: PulseChannel;
-  readonly ch3: WaveChannel;
-  readonly ch4: NoiseChannel;
+  ch1: PulseChannel;
+  ch2: PulseChannel;
+  ch3: WaveChannel;
+  ch4: NoiseChannel;
 
   private _masterVolume: number = 0.5;
   private channelEnabled: boolean[] = [true, true, true, true];
@@ -96,12 +96,12 @@ export class GameBoyAPU {
     this.gainNode.gain.value = this._masterVolume;
     this.gainNode.connect(this.audioContext.destination);
 
-    // 各チャンネルのサンプルレートを設定
+    // 各チャンネルを新しいサンプルレートで再作成
     const sampleRate = this.audioContext.sampleRate;
     this.ch1 = new PulseChannel(sampleRate);
     this.ch2 = new PulseChannel(sampleRate);
-    (this.ch3 as { sampleRate: number }).sampleRate = sampleRate;
-    (this.ch4 as { sampleRate: number }).sampleRate = sampleRate;
+    this.ch3 = new WaveChannel(sampleRate);
+    this.ch4 = new NoiseChannel(sampleRate);
 
     // ScriptProcessorNodeを使用（AudioWorkletよりシンプル）
     const bufferSize = 2048;
