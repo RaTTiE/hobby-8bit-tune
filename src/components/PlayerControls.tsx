@@ -40,9 +40,10 @@ export function PlayerControls({
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.controls}>
+    <div className="player-controls" style={styles.container}>
+      <div className="player-buttons" style={styles.controls}>
         <button
+          className="player-button"
           style={styles.button}
           onClick={state === 'playing' ? onPause : onPlay}
           title={state === 'playing' ? 'Pause' : 'Play'}
@@ -50,16 +51,17 @@ export function PlayerControls({
           {state === 'playing' ? '⏸' : '▶'}
         </button>
         <button
+          className="player-button"
           style={styles.button}
           onClick={onStop}
           title="Stop"
         >
           ⏹
         </button>
-        <div style={styles.timeDisplay}>
+        <div className="player-time-display" style={styles.timeDisplay}>
           {formatTime(position)} / {formatTime(duration)}
         </div>
-        <div style={styles.tempoDisplay}>
+        <div className="player-tempo-display" style={styles.tempoDisplay}>
           BPM: {tempo}
         </div>
       </div>

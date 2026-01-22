@@ -12,10 +12,11 @@ export function SampleSelector({ samples, onSelect }: SampleSelectorProps) {
   return (
     <div style={styles.container}>
       <div style={styles.header}>Sample MML</div>
-      <div style={styles.list}>
+      <div className="sample-selector-list" style={styles.list}>
         {samples.map((sample, index) => (
           <button
             key={index}
+            className="sample-selector-button"
             style={styles.button}
             onClick={() => onSelect(sample.mml)}
           >
@@ -42,9 +43,7 @@ const styles: Record<string, React.CSSProperties> = {
     textTransform: 'uppercase',
   },
   list: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
+    display: 'grid',
   },
   button: {
     padding: '10px 16px',

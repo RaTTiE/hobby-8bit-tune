@@ -102,20 +102,20 @@ function App() {
   };
 
   return (
-    <div style={styles.container}>
-      <header style={styles.header}>
-        <h1 style={styles.title}>
+    <div className="app-container">
+      <header className="app-header">
+        <h1 className="app-title">
           <span style={styles.titleIcon}>&#x1F3AE;</span>
           Game Boy MML Player
         </h1>
-        <p style={styles.subtitle}>
+        <p className="app-subtitle">
           ゲームボーイ音源エミュレータ & MML再生
         </p>
       </header>
 
-      <main style={styles.main}>
-        <div style={styles.leftPanel}>
-          <div style={styles.editorContainer}>
+      <main className="app-main">
+        <div className="app-left-panel">
+          <div className="app-editor-container">
             <MMLEditor
               value={mml}
               onChange={handleMMLChange}
@@ -124,7 +124,7 @@ function App() {
           </div>
         </div>
 
-        <div style={styles.rightPanel}>
+        <div className="app-right-panel">
           <PlayerControls
             state={playerState}
             position={position}
@@ -136,7 +136,7 @@ function App() {
             onSeek={handleSeek}
           />
 
-          <div style={styles.loopControl}>
+          <div className="loop-control" style={styles.loopControl}>
             <label style={styles.loopLabel}>
               <input
                 type="checkbox"
@@ -160,9 +160,9 @@ function App() {
             onSelect={handleSampleSelect}
           />
 
-          <div style={styles.help}>
+          <div className="help-section" style={styles.help}>
             <h3 style={styles.helpTitle}>MML Reference</h3>
-            <div style={styles.helpContent}>
+            <div className="help-content" style={styles.helpContent}>
               <p><b>A/B/C/D:</b> Channel (CH1-4)</p>
               <p><b>C D E F G A B:</b> Notes</p>
               <p><b>+ #:</b> Sharp | <b>-:</b> Flat</p>
@@ -179,7 +179,7 @@ function App() {
         </div>
       </main>
 
-      <footer style={styles.footer}>
+      <footer className="app-footer">
         <p>Web Audio API + React | Game Boy APU Emulation</p>
       </footer>
     </div>
@@ -187,53 +187,10 @@ function App() {
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  container: {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '20px',
-    maxWidth: '1400px',
-    margin: '0 auto',
-  },
-  header: {
-    textAlign: 'center',
-    marginBottom: '24px',
-  },
-  title: {
-    fontSize: '32px',
-    color: '#9be36d',
-    margin: '0 0 8px 0',
-    textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-  },
   titleIcon: {
-    marginRight: '12px',
-  },
-  subtitle: {
-    color: '#6b8f5c',
-    margin: 0,
-    fontSize: '14px',
-  },
-  main: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 350px',
-    gap: '24px',
-    flex: 1,
-  },
-  leftPanel: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  editorContainer: {
-    flex: 1,
-    minHeight: '400px',
-  },
-  rightPanel: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
+    marginRight: '8px',
   },
   loopControl: {
-    padding: '12px 16px',
     backgroundColor: '#1e2a3a',
     borderRadius: '4px',
     border: '2px solid #9be36d',
@@ -252,7 +209,6 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: 'pointer',
   },
   help: {
-    padding: '16px',
     backgroundColor: '#1e2a3a',
     borderRadius: '4px',
     border: '2px solid #9be36d',
@@ -265,15 +221,8 @@ const styles: Record<string, React.CSSProperties> = {
   },
   helpContent: {
     color: '#6b8f5c',
-    fontSize: '12px',
     lineHeight: '1.6',
     fontFamily: "'Courier New', monospace",
-  },
-  footer: {
-    textAlign: 'center',
-    padding: '20px 0',
-    color: '#4a5568',
-    fontSize: '12px',
   },
 };
 
