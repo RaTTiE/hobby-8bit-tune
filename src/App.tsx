@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { MMLEditor } from './components/MMLEditor';
 import { PlayerControls } from './components/PlayerControls';
 import { ChannelMixer } from './components/ChannelMixer';
-import { SampleSelector } from './components/SampleSelector';
+import { MMLLibrary } from './components/MMLLibrary';
 import { MMLPlayer, PlayerState } from './mml/player';
 import { SAMPLE_LIST, SAMPLE_MML } from './samples';
 
@@ -155,8 +155,9 @@ function App() {
             onMasterVolumeChange={handleMasterVolumeChange}
           />
 
-          <SampleSelector
-            samples={SAMPLE_LIST}
+          <MMLLibrary
+            presets={SAMPLE_LIST}
+            currentMML={mml}
             onSelect={handleSampleSelect}
           />
 
