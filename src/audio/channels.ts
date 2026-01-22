@@ -208,7 +208,6 @@ export class NoiseChannel {
   private sampleRate: number;
   private lfsr: number = 0x7FFF;
   private timer: number = 0;
-  private _frequency: number = 440;
   private _volume: number = 15;
   private _widthMode: number = 0;  // 0: 15-bit, 1: 7-bit
   private _divisor: number = 8;
